@@ -1,0 +1,26 @@
+scrape_configs:
+  - job_name: kafka
+    scrape_interval: 10s
+    scrape_timeout: 9s
+    static_configs:
+      - targets:
+          - "kafka-exporter:9308"
+  - job_name: rabbitmq
+    scrape_interval: 10s
+    scrape_timeout: 9s
+    metrics_path: "/metrics/per-object"
+    static_configs:
+      - targets:
+          - "rabbitmq:15692"
+  - job_name: rocketmq
+    scrape_interval: 10s
+    scrape_timeout: 9s
+    static_configs:
+      - targets:
+          - "rocketmq-exporter:5557"
+  - job_name: activemq
+    scrape_interval: 10s
+    scrape_timeout: 9s
+    static_configs:
+      - targets:
+          - "activemq-broker:8080"

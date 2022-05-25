@@ -1,0 +1,28 @@
+---
+version: '3'
+services:
+  rabbitmq:
+    image: rabbitmq:3.9.17
+    container_name: rabbitmq
+    ports:
+      - "9095:5672" # rabbitmq
+      - "9002:15692" # metrics
+      - "9092:15672" # management
+    volumes:
+      - "/mnt/c/Users/piotr/workspace/rabbitmq/enabled_plugins:/etc/rabbitmq/enabled_plugins"
+    restart: always
+  
+#  rabbitmq-exporter:
+#    image: kbudde/rabbitmq-exporter:1.0.0-RC14
+#    container_name: rabbitmq-exporter
+#    environment:
+#      - "RABBIT_URL=http://host.docker.internal:9092"
+#      - "RABBIT_EXPORTERS=queue"
+#      - "9003:9419" # metrics
+#   restart: always
+  
+networks:
+  default:
+    external:
+      name: cluster-network-1
+    

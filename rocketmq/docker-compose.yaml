@@ -1,0 +1,43 @@
+---
+version: '3'
+services:
+  nameserver:
+    image: apacherocketmq/rocketmq:4.9.3-alpine
+    container_name: rocketmq-nameserver
+    ports:
+      - "9096:9876"
+    volumes:
+      - "/mnt/c/Users/piotr/workspace/rocketmq/nameserver/logs:/home/rocketmq/logs"
+    command: ./mqnamesrv
+    restart: always
+
+  broker:
+    image: apacherocketmq/rocketmq:4.9.3-alpine
+    container_name: rocketmq-broker
+    ports:
+      - "9097:9097"
+      - "9098:9098"
+      - "9099:9099"
+    volumes:
+      - "/mnt/c/Users/piotr/workspace/rocketmq/broker/logs:/home/rocketmq/logs"
+      - "/mnt/c/Users/piotr/workspace/rocketmq/broker/store:/home/rocketmq/store"
+      - "/mnt/c/Users/piotr/workspace/rocketmq/broker/conf/broker.conf:/home/rocketmq/rocketmq-4.9.3/conf/broker.conf"
+    command: ./mqbroker -n rocketmq-nameserver:9876 -c ../conf/broker.conf
+    restart: always
+    depends_on:
+      - nameserver
+
+  exporter:
+    image: rocketmq-exporter:latest
+    container_name: rocketmq-exporter
+    ports:
+      - "9004:5557" # metrics
+    restart: always
+    depends_on:
+      - broker
+  
+networks:
+  default:
+    external:
+      name: cluster-network-1
+    

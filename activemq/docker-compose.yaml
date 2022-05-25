@@ -1,0 +1,20 @@
+---
+version: '3'
+services:
+  activemq:
+    image: activemq-alpine:5.17.1
+    container_name: activemq-broker
+    ports:
+      - "9005:8080" # jmx-exporter
+      - "9100:8161" # console
+      - "9101:61616" # data
+    environment:
+      ACTIVEMQ_OPTS: "-javaagent:/opt/jmx_prometheus_javaagent-0.17.0.jar=8080:/opt/apache-activemq-5.17.1/conf/jmx-config.yml -Djava.util.logging.config.file=logging.properties"
+    volumes:
+      - "/mnt/c/Users/piotr/workspace/activemq/conf:/opt/apache-activemq-5.17.1/conf"
+    restart: always
+  
+networks:
+  default:
+    external:
+      name: cluster-network-1
