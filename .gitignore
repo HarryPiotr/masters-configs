@@ -1,0 +1,10 @@
+/monitoring/prometheus/data/
+/activemq/distro/jmx_prometheus_javaagent-0.17.0.jar
+/activemq/distro/apache-activemq-5.17.1-bin.tar.gz
+/activemq/distro/apache-activemq-5.17.1/
+/kafka-cli/
+/rocketmq/broker/logs/
+/rocketmq/broker/store/
+/rocketmq/nameserver/logs/
+/rocketmq/rocketmq-docker/
+/rocketmq/rocketmq-exporter/
