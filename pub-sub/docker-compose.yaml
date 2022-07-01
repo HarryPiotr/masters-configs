@@ -1,0 +1,60 @@
+---
+version: '3'
+services:
+  publisher:
+    image: harrypiotr/publisher:1.0
+    container_name: publisher
+    environment:
+      KAFKA_BOOTSTRAP_SERVER: kafka-broker:29092
+      KAFKA_OUTBOUND_TOPIC: test-topic
+      KAFKA_ACKS: 1
+
+      RABBITMQ_SERVER_HOSTNAME: rabbitmq
+      RABBITMQ_SERVER_PORT: 5672
+      RABBITMQ_OUTBOUND_QUEUE: test-queue-1
+
+      ROCKETMQ_NAMESERVER: rocketmq-nameserver:9096
+      ROCKETMQ_GROUP_NAME: rocket-producer-group-1
+      ROCKETMQ_OUTBOUND_TOPIC: test-topic-1
+
+      ACTIVEMQ_SERVER: activemq-broker:61616
+      ACTIVEMQ_OUTBOUND_QUEUE: test-queue-1
+
+      NSQ_SERVER: nsq-broker:4150
+      NSQ_OUTBOUND_TOPIC: test-topic-1
+    ports:
+      - "9401:8080"
+
+  subscriber:
+    image: harrypiotr/subscriber:1.0
+    container_name: subscriber
+    environment:
+      KAFKA_ENABLED: true
+      KAFKA_BOOTSTRAP_SERVER: kafka-broker:29092
+      KAFKA_INBOUND_TOPIC: test-topic
+      KAFKA_CONSUMER_GROUP: test-consumergroup-1
+
+      RABBITMQ_ENABLED: true
+      RABBITMQ_SERVER_HOSTNAME: rabbitmq
+      RABBITMQ_SERVER_PORT: 5672
+      RABBITMQ_INBOUND_QUEUE: test-queue-1
+
+      ROCKETMQ_ENABLED: false
+      ROCKETMQ_NAMESERVER: rocketmq-nameserver:9096
+      ROCKETMQ_GROUP_NAME: rocket-consumer-group-1
+      ROCKETMQ_INBOUND_TOPIC: test-queue-1
+
+      ACTIVEMQ_ENABLED: true
+      ACTIVEMQ_SERVER: activemq-broker:61616
+      ACTIVEMQ_INBOUND_QUEUE: test-queue-1
+
+      NSQ_ENABLED: true
+      NSQ_SERVER: nsq-lookupd:4161
+      NSQ_INBOUND_TOPIC: test-topic-1
+      NSQ_CHANNEL: test-channel-1
+    ports:
+      - "9402:8080"
+networks:
+  default:
+    external:
+      name: cluster-network-1

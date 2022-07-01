@@ -11,7 +11,7 @@ services:
     environment:
       ACTIVEMQ_OPTS: "-javaagent:/opt/jmx_prometheus_javaagent-0.17.0.jar=8080:/opt/apache-activemq-5.17.1/conf/jmx-config.yml -Djava.util.logging.config.file=logging.properties"
     volumes:
-      - "/mnt/c/Users/piotr/workspace/activemq/conf:/opt/apache-activemq-5.17.1/conf"
+      - "/mnt/c/Users/piotr/workspace/masters-configs/activemq/conf:/opt/apache-activemq-5.17.1/conf"
     restart: always
   
 networks:

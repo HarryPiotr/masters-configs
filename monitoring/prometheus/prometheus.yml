@@ -30,3 +30,15 @@ scrape_configs:
     static_configs:
       - targets:
           - "nsq-exporter:8082"
+  - job_name: publisher
+    scrape_interval: 10s
+    scrape_timeout: 9s
+    static_configs:
+      - targets:
+          - "publisher:8080"
+  - job_name: subscriber
+    scrape_interval: 10s
+    scrape_timeout: 9s
+    static_configs:
+      - targets:
+          - "subscriber:8080"

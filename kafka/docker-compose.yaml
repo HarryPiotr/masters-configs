@@ -22,11 +22,12 @@ services:
       KAFKA_ZOOKEEPER_CONNECT: 'kafka-zookeeper:2181'
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_INTERNAL:PLAINTEXT
       KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://host.docker.internal:9094,PLAINTEXT_INTERNAL://kafka-broker:29092
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
 
   exporter:
     image: danielqsj/kafka-exporter:v1.4.2
     container_name: kafka-exporter
-    command: --kafka.server=kafka-broker:9094
+    command: --kafka.server=kafka-broker:29092
     restart: always
     ports:
       - "9001:9308"
