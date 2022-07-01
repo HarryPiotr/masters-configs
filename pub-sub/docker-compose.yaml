@@ -13,7 +13,7 @@ services:
       RABBITMQ_SERVER_PORT: 5672
       RABBITMQ_OUTBOUND_QUEUE: test-queue-1
 
-      ROCKETMQ_NAMESERVER: rocketmq-nameserver:9096
+      ROCKETMQ_NAMESERVER: rocketmq-nameserver:9876
       ROCKETMQ_GROUP_NAME: rocket-producer-group-1
       ROCKETMQ_OUTBOUND_TOPIC: test-topic-1
 
@@ -39,16 +39,16 @@ services:
       RABBITMQ_SERVER_PORT: 5672
       RABBITMQ_INBOUND_QUEUE: test-queue-1
 
-      ROCKETMQ_ENABLED: false
-      ROCKETMQ_NAMESERVER: rocketmq-nameserver:9096
+      ROCKETMQ_ENABLED: true
+      ROCKETMQ_NAMESERVER: rocketmq-nameserver:9876
       ROCKETMQ_GROUP_NAME: rocket-consumer-group-1
-      ROCKETMQ_INBOUND_TOPIC: test-queue-1
+      ROCKETMQ_INBOUND_TOPIC: test-topic-1
 
-      ACTIVEMQ_ENABLED: true
+      ACTIVEMQ_ENABLED: false
       ACTIVEMQ_SERVER: activemq-broker:61616
       ACTIVEMQ_INBOUND_QUEUE: test-queue-1
 
-      NSQ_ENABLED: true
+      NSQ_ENABLED: false
       NSQ_SERVER: nsq-lookupd:4161
       NSQ_INBOUND_TOPIC: test-topic-1
       NSQ_CHANNEL: test-channel-1

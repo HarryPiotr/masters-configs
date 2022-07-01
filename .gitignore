@@ -6,5 +6,4 @@
 /rocketmq/broker/logs/
 /rocketmq/broker/store/
 /rocketmq/nameserver/logs/
-/rocketmq/rocketmq-docker/
-/rocketmq/rocketmq-exporter/
+/rocketmq/distro/

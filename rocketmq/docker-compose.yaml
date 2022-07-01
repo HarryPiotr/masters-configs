@@ -7,7 +7,7 @@ services:
     ports:
       - "9096:9876"
     volumes:
-      - "/mnt/c/Users/piotr/workspace/rocketmq/nameserver/logs:/home/rocketmq/logs"
+      - "/mnt/c/Users/piotr/workspace/masters-configs/rocketmq/nameserver/logs:/home/rocketmq/logs"
     command: ./mqnamesrv
     restart: always
 
@@ -19,9 +19,9 @@ services:
       - "9098:9098"
       - "9099:9099"
     volumes:
-      - "/mnt/c/Users/piotr/workspace/rocketmq/broker/logs:/home/rocketmq/logs"
-      - "/mnt/c/Users/piotr/workspace/rocketmq/broker/store:/home/rocketmq/store"
-      - "/mnt/c/Users/piotr/workspace/rocketmq/broker/conf/broker.conf:/home/rocketmq/rocketmq-4.9.3/conf/broker.conf"
+      - "/mnt/c/Users/piotr/workspace/masters-configs/rocketmq/broker/logs:/home/rocketmq/logs"
+      - "/mnt/c/Users/piotr/workspace/masters-configs/rocketmq/broker/store:/home/rocketmq/store"
+      - "/mnt/c/Users/piotr/workspace/masters-configs/rocketmq/broker/conf/broker.conf:/home/rocketmq/rocketmq-4.9.3/conf/broker.conf"
     command: ./mqbroker -n rocketmq-nameserver:9876 -c ../conf/broker.conf
     restart: always
     depends_on:
@@ -30,6 +30,13 @@ services:
   exporter:
     image: rocketmq-exporter:latest
     container_name: rocketmq-exporter
+    environment:
+      SERVER_PORT: 5557
+      ROCKETMQ_CONFIG_ROCKETMQ_VERSION: V4_9_3
+      ROCKETMQ_CONFIG_NAMESRV_ADDR: rocketmq-nameserver:9876
+      TASK_COLLECT_TOPIC_OFFSET: 0/5 * * * * ?
+      TASK_COLLECT_CONSUMER_OFFSET: 0/5 * * * * ?
+      TASK_COLLECT_BROKER_STATS_TOPIC: 0/5 * * * * ?
     ports:
       - "9004:5557" # metrics
     restart: always
