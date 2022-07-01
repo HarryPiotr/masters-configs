@@ -22,6 +22,7 @@ services:
       KAFKA_ZOOKEEPER_CONNECT: 'kafka-zookeeper:2181'
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_INTERNAL:PLAINTEXT
       KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://host.docker.internal:9094,PLAINTEXT_INTERNAL://kafka-broker:29092
+
   exporter:
     image: danielqsj/kafka-exporter:v1.4.2
     container_name: kafka-exporter

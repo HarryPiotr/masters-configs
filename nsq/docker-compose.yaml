@@ -1,0 +1,44 @@
+---
+version: '3'
+services:
+  lookup:
+    image: nsqio/nsq:v1.2.1
+    container_name: nsq-lookupd
+    command: /nsqlookupd --broadcast-address host.docker.internal:9104
+    ports:
+      - "9104:4160"
+      - "9105:4161"
+
+  broker:
+    image: nsqio/nsq:v1.2.1
+    container_name: nsq-broker
+    command: /nsqd --lookupd-tcp-address nsq-lookupd:4160 --broadcast-address host.docker.internal --broadcast-tcp-port 9102 --broadcast-http-port 9103
+    depends_on:
+      - lookup
+    ports:
+      - "9102:4150"
+      - "9103:4151"
+
+  admin:
+    image: nsqio/nsq:v1.2.1
+    container_name: nsq-admin
+    command: /nsqadmin --lookupd-http-address nsq-lookupd:4161
+    depends_on:
+      - lookup
+    ports:
+      - "9106:4171"
+
+  exporter:
+    image: harrypiotr/nsq-exporter:1.0
+    container_name: nsq-exporter
+    environment:
+      NSQ_BROKER_SERVER: "nsq-broker:4151"
+    depends_on:
+      - broker
+    ports:
+      - "9006:8082"
+
+networks:
+  default:
+    external:
+      name: cluster-network-1
